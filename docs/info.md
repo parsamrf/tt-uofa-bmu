@@ -1,20 +1,19 @@
-<!---
-
-This file is used to generate your project datasheet. Please fill in the information below and delete any unused
-sections.
-
-You can also include images in this folder and reference them in the markdown. Each image must be less than
-512 kb in size, and the combined size of all images must be less than 1 MB.
--->
-
 ## How it works
 
-Explain how your project works
+A PicoRV32 CPU with a bit-manipulation unit (BMU) on the PCPI co-processor
+interface, exposing custom-0 instructions for leading-zero count,
+trailing-zero count, bit reverse, and population count. A hardwired boot ROM
+runs all four ops on 0x00F0F0F0 and latches the results; no firmware load is
+needed.
+
+Expected: LZC = 8, TZC = 4, REV = 0x0F0F0F00, POPCOUNT = 12.
 
 ## How to test
 
-Explain how to use your project
+After reset, wait for test_done (uio[0]); trap (uio[1]) must stay low.
+ui[3:2] selects the result word (in the order above), ui[1:0] the byte,
+uo[7:0] shows it. The cocotb test in `test/` checks all four words exactly.
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+None.
